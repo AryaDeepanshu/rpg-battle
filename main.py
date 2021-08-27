@@ -1,5 +1,6 @@
 from classes.game import Person,bcolors
 from classes.magic import Spell
+from classes.inventory import Items
 
 #Black Magic
 fire = Spell("Fire", 10, 100, "Black")
@@ -13,8 +14,19 @@ cure = Spell("Cure", 12, 120, "White")
 cura = Spell("Cura", 18, 200, "White")
 
 
-player = Person(460, 65, 60, 34, [fire, thunder, blizzard, meteor, quake, cure, cura])
-enemy = Person(1200, 65, 45, 25, [])
+#Items
+potion = Items("Potion", "potion", "Heals 50 HP", 50)
+hipotion = Items("Hi-Potion", "potion", "Heals 100 HP", 100)
+superpotion = Items("Super Potion", "potion", "Heals 500 HP", 500)
+elixer = Items("Elixer", "elixer", " Fully restores HP/MP of one party member", 99999)
+highelixer = Items("Mega Elixer", "elixer", "Fully restores party's HP/MP", 99999)
+grenade = Items("Grenade", "attack", "Deals 500 damage", 500)
+
+
+player_magic = [fire, thunder, blizzard, meteor, quake, cure, cura]
+player_items = [potion, hipotion, superpotion, elixer, highelixer, grenade]
+player = Person(460, 65, 60, 34, player_magic, player_items)
+enemy = Person(1200, 65, 45, 25, [],[])
 
 running = True
 i = 0
@@ -31,9 +43,11 @@ while running:
         dmg = player.generate_damage()
         enemy.take_damage(dmg)
         print("You attacked enemy for", dmg, "points of damage. Enemy HP: ", enemy.get_hp())
-    else:
+    if index == 1:
         player.choose_magic()
         choice = int(input("Select Spell: ")) - 1
+        if choice == -1:
+            continue
 
         spell = player.magic[choice]
         
@@ -50,6 +64,16 @@ while running:
             enemy.take_damage(magic_dmg)
             print("You attacked enemy for", magic_dmg, "points of damage. Enemy HP: ", enemy.get_hp())
         print("You chose " + spell.name + " spell costing ", spell.cost, "mp")
+    if index == 2:
+        player.choose_item()
+        item_chose = int(input("Choose Item: ")) - 1
+        if item_chose == -1:
+            continue
+        
+        item = player.items[item_chose]
+        if item.type == "potion":
+            player.heal(item.prop)
+            print(item.name, " heals for: ", item.prop, " HP")
 
     
     enemy_choice = 1

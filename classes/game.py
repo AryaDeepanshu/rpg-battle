@@ -12,7 +12,7 @@ class bcolors:
 
 
 class Person:
-    def __init__(self,hp,mp,atk,df,magic):
+    def __init__(self,hp,mp,atk,df,magic,items):
         self.maxhp = hp    
         self.hp = hp                  
         self.maxmp = mp    
@@ -21,7 +21,8 @@ class Person:
         self.atkh = atk + 10
         self.df = df
         self.magic = magic
-        self.action = ["Attack","Magic"]
+        self.items = items
+        self.action = ["Attack", "Magic", "Items"]
 
 
     def generate_damage(self):
@@ -61,16 +62,24 @@ class Person:
 
 
     def choose_action(self):
-        print("Actions")
+        print("Actions: ")
         i = 1
         for item in self.action:
-            print(str(i)+ ":", item)
+            print("    " + str(i)+ ".", item)
             i += 1
 
 
     def choose_magic(self):
-        print("Magics")
+        print("Magics: ")
         i = 1
         for spell in self.magic:
-            print(str(i)+ ":", spell.name, "(cost:", str(spell.cost) + ")")
+            print("    " + str(i)+ ".", spell.name, "(cost:", str(spell.cost) + ")")
+            i += 1
+
+
+    def choose_item(self):
+        print("Items: ")
+        i = 1
+        for item in self.items:
+            print("    " + str(i)+ ".", item.name, ":", item.description, " (x5)")
             i += 1
