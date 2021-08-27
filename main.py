@@ -32,14 +32,14 @@ enemy = Person(1200, 65, 45, 25, [],[])
 
 running = True
 i = 0
-print(bcolors.FAIL + bcolors.BOLD + "An Enemy Attacks!" + bcolors.ENDC)
+print("An Enemy Attacks!")
 
 while running:
-    print("===========================")
+    print("================================")
     player.choose_action()
     choice = input("Choose Action: ")
     index = int(choice) - 1
-    print("You chose ",choice)
+    print("\nYou chose ",player.action[index])
 
     if index == 0:
         dmg = player.generate_damage()

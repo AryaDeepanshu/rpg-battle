@@ -62,7 +62,7 @@ class Person:
 
 
     def choose_action(self):
-        print("Actions: ")
+        print("\nActions: ")
         i = 1
         for item in self.action:
             print("    " + str(i)+ ".", item)
@@ -70,7 +70,7 @@ class Person:
 
 
     def choose_magic(self):
-        print("Magics: ")
+        print("\nMagics: ")
         i = 1
         for spell in self.magic:
             print("    " + str(i)+ ".", spell.name, "(cost:", str(spell.cost) + ")")
@@ -78,7 +78,7 @@ class Person:
 
 
     def choose_item(self):
-        print("Items: ")
+        print("\nItems: ")
         i = 1
         for item in self.items:
             print("    " + str(i)+ ".", item["item"].name, ":", item["item"].description, " (x" + str(item["quantity"])+")")
