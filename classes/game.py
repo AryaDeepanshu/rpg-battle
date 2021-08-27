@@ -12,8 +12,9 @@ class bcolors:
 
 
 class Person:
-    def __init__(self,hp,mp,atk,df,magic,items):
-        self.maxhp = hp    
+    def __init__(self, name, hp, mp, atk, df, magic, items):
+        self.maxhp = hp 
+        self.name = name   
         self.hp = hp                  
         self.maxmp = mp    
         self.mp = mp    
@@ -62,24 +63,46 @@ class Person:
 
 
     def choose_action(self):
-        print("\nActions: ")
+        print("    "+self.name)
+        print("    Actions: ")
         i = 1
         for item in self.action:
-            print("    " + str(i)+ ".", item)
+            print("        " + str(i)+ ".", item)
             i += 1
 
 
     def choose_magic(self):
-        print("\nMagics: ")
+        print("\n    Magics: ")
         i = 1
         for spell in self.magic:
-            print("    " + str(i)+ ".", spell.name, "(cost:", str(spell.cost) + ")")
+            print("        " + str(i)+ ".", spell.name, "(cost:", str(spell.cost) + ")")
             i += 1
 
 
     def choose_item(self):
-        print("\nItems: ")
+        print("\n    Items: ")
         i = 1
         for item in self.items:
-            print("    " + str(i)+ ".", item["item"].name, ":", item["item"].description, " (x" + str(item["quantity"])+")")
+            print("        " + str(i)+ ".", item["item"].name, ":", item["item"].description, " (x" + str(item["quantity"])+")")
             i += 1
+
+
+    def get_stat(self):
+        hp_bar = ""
+        hp_bar_ticks = (self.hp/self.maxhp)*100 / 4
+
+        mp_bar = ""
+        mp_bar_ticks = (self.mp/self.maxmp)*100 / 10
+        while hp_bar_ticks > 0:
+            hp_bar += "█"
+            hp_bar_ticks -= 1
+        while len(hp_bar) < 25:
+            hp_bar += " "
+
+        while mp_bar_ticks > 0:
+            mp_bar += "█"
+            mp_bar_ticks -= 1
+        while len(mp_bar) < 10:
+            mp_bar += " "
+        print("                         _________________________                __________")
+        print(self.name,"    ", self.hp, "/", self.maxhp, "|" + hp_bar + "|     ", self.mp, "/", self.maxmp, "|" + mp_bar + "|")

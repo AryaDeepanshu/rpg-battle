@@ -1,0 +1,1 @@
+, "|                         |     ", self.mp, "/", self.maxmp, "|          |")
