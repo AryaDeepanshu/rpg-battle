@@ -52,4 +52,4 @@ while running:
     print("================================")
     print("Enemy HP: ", enemy.get_hp(),"/",enemy.get_maxhp())
     print("Your HP: ", player.get_hp(),"/",player.get_maxhp())
-    print("Your MP: ", player.get_mp(),"/",player.get_maxmp()``
+    print("Your MP: ", player.get_mp(),"/",player.get_maxmp())
