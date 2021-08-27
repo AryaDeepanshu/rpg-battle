@@ -24,7 +24,9 @@ grenade = Items("Grenade", "attack", "Deals 500 damage", 500)
 
 
 player_magic = [fire, thunder, blizzard, meteor, quake, cure, cura]
-player_items = [potion, hipotion, superpotion, elixer, highelixer, grenade]
+player_items = [{"item":potion, "quantity": 5}, {"item":hipotion, "quantity": 5},
+                {"item":superpotion, "quantity": 5}, {"item":elixer, "quantity": 5},
+                {"item":highelixer, "quantity": 5}, {"item":grenade, "quantity": 5}]
 player = Person(460, 65, 60, 34, player_magic, player_items)
 enemy = Person(1200, 65, 45, 25, [],[])
 
@@ -70,10 +72,22 @@ while running:
         if item_chose == -1:
             continue
         
-        item = player.items[item_chose]
+        item = player.items[item_chose]["item"]
+        if player.items[item_chose]["quantity"] == 0:
+            print("All ",player.items[item_chose]["item"].name, " are used.")
+            continue
+        player.items[item_chose]["quantity"] -= 1
+        
         if item.type == "potion":
             player.heal(item.prop)
             print(item.name, " heals for: ", item.prop, " HP")
+        elif item.type == "elixer":
+            player.hp = player.maxhp
+            player.mp = player.maxmp
+            print(item.name," fully restores HP/MP")
+        elif item.type == "attack":
+            enemy.take_damage(item.prop)
+            print("You attacked enemy with ", item.name, " for ", item.prop, " HP")
 
     
     enemy_choice = 1

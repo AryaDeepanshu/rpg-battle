@@ -81,5 +81,5 @@ class Person:
         print("Items: ")
         i = 1
         for item in self.items:
-            print("    " + str(i)+ ".", item.name, ":", item.description, " (x5)")
+            print("    " + str(i)+ ".", item["item"].name, ":", item["item"].description, " (x" + str(item["quantity"])+")")
             i += 1
