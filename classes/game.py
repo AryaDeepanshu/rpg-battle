@@ -56,6 +56,10 @@ class Person:
         self.mp -= cost
 
 
+    def heal(self,dmg):
+        self.hp += dmg
+
+
     def choose_action(self):
         print("Actions")
         i = 1

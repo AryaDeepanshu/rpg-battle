@@ -41,11 +41,15 @@ while running:
             print(bcolors.FAIL + "\n Not enough MP\n" + bcolors.ENDC)
             continue
         player.reduce_mp(spell.cost)
-        print("You chose " + spell.name + " spell costing ", spell.cost, "mp")
-
         magic_dmg = spell.generate_spell_damage()
-        enemy.take_damage(magic_dmg)
-        print("You attacked enemy for", magic_dmg, "points of damage. Enemy HP: ", enemy.get_hp())
+
+        if spell.type == "White":
+            player.heal(magic_dmg)
+            print("You were healed by ", spell.name, "by ", spell.dmg," of HP.")
+        else:
+            enemy.take_damage(magic_dmg)
+            print("You attacked enemy for", magic_dmg, "points of damage. Enemy HP: ", enemy.get_hp())
+        print("You chose " + spell.name + " spell costing ", spell.cost, "mp")
 
     
     enemy_choice = 1
