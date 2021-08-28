@@ -104,5 +104,9 @@ class Person:
             mp_bar_ticks -= 1
         while len(mp_bar) < 10:
             mp_bar += " "
-        print("                         _________________________                __________")
-        print(self.name,"    ", self.hp, "/", self.maxhp, "|" + hp_bar + "|     ", self.mp, "/", self.maxmp, "|" + mp_bar + "|")
+
+        hp_string = " "*(11-len(str(self.hp) + "/" + str(self.maxhp))) + str(self.hp) + "/" + str(self.maxhp)
+        mp_string = " "*(9-len(str(self.mp) + "/" + str(self.maxmp))) + str(self.mp) + "/" + str(self.maxmp)
+
+        print("                              _________________________                  __________")
+        print(self.name + (16-len(self.name))*" ", hp_string, "|" + hp_bar + "|     ", mp_string, "|" + mp_bar + "|")
