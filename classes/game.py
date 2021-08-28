@@ -59,7 +59,10 @@ class Person:
 
 
     def heal(self,dmg):
-        self.hp += dmg
+        if self.hp + dmg > self.maxhp:
+            self.hp = self.maxhp
+        else:
+            self.hp += dmg
 
 
     def choose_action(self):
@@ -88,22 +91,9 @@ class Person:
 
 
     def get_stat(self):
-        hp_bar = ""
-        hp_bar_ticks = (self.hp/self.maxhp)*100 / 4
+        hp_bar = "█"*int((self.hp/self.maxhp)*100 / 4) + " "*(25-len(str("█"*int((self.hp/self.maxhp)*100 / 4))))
+        mp_bar = "█"*int((self.mp/self.maxmp)*100 / 10) + " "*(10-len(str("█"*int((self.mp/self.maxmp)*100 / 10))))
 
-        mp_bar = ""
-        mp_bar_ticks = (self.mp/self.maxmp)*100 / 10
-        while hp_bar_ticks > 0:
-            hp_bar += "█"
-            hp_bar_ticks -= 1
-        while len(hp_bar) < 25:
-            hp_bar += " "
-
-        while mp_bar_ticks > 0:
-            mp_bar += "█"
-            mp_bar_ticks -= 1
-        while len(mp_bar) < 10:
-            mp_bar += " "
 
         hp_string = " "*(11-len(str(self.hp) + "/" + str(self.maxhp))) + str(self.hp) + "/" + str(self.maxhp)
         mp_string = " "*(9-len(str(self.mp) + "/" + str(self.maxmp))) + str(self.mp) + "/" + str(self.maxmp)
