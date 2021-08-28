@@ -30,14 +30,18 @@ player_items = [{"item":potion, "quantity": 5}, {"item":hipotion, "quantity": 5}
                 {"item":superpotion, "quantity": 5}, {"item":elixer, "quantity": 5},
                 {"item":highelixer, "quantity": 5}, {"item":grenade, "quantity": 5}]
 
+#players
+player1 = Person("Clay:", 3260, 132, 60, 34, player_magic, player_items)
+player2 = Person("Hannah:", 4160, 188, 60, 34, player_magic, player_items)
+player3 = Person("Tony:", 3089, 174, 60, 34, player_magic, player_items)
 
-player1 = Person("Valos:", 3260, 132, 60, 34, player_magic, player_items)
-player2 = Person("Nick:", 4160, 188, 60, 34, player_magic, player_items)
-player3 = Person("cloe:", 3089, 174, 60, 34, player_magic, player_items)
-enemy = Person("Bryce:", 1200, 221, 45, 25, [],[])
+#enemies 
+enemy1 = Person("Bryce:", 1200, 221, 45, 25, [],[])
+enemy2 = Person("Monty:", 1200, 221, 45, 25, [],[])
+enemy3 = Person("Jeff:", 1200, 221, 45, 25, [],[])
 
 players = [player1, player2, player3]
-
+enemies = [enemy1, enemy2, enemy3]
 running = True
 i = 0
 
@@ -49,7 +53,8 @@ while running:
     print("NAME                          HP                                         MP")
     for player in players:
         player.get_stat()
-    enemy.get_enemy_stat()
+    for enemy in enemies:
+        enemy.get_enemy_stat()
 
     for player in players:
         
@@ -60,8 +65,9 @@ while running:
 
         if index == 0:
             dmg = player.generate_damage()
-            enemy.take_damage(dmg)
-            print("You attacked enemy for", dmg, "points of damage. Enemy HP: ", enemy.get_hp())
+            enemy = player.choose_target(enemies)
+            enemies[enemy].take_damage(dmg)
+            print("You attacked ", enemies[enemy].name, " for", dmg, "points of damage. Enemy HP: ", enemies[enemy].get_hp())
         if index == 1:
             player.choose_magic()
             choice = int(input("    Select Spell: ")) - 1
@@ -80,8 +86,10 @@ while running:
                 player.heal(magic_dmg)
                 print("You were healed by ", spell.name, "by ", spell.dmg," of HP.")
             else:
-                enemy.take_damage(magic_dmg)
-                print("You attacked enemy for", magic_dmg, "points of damage. Enemy HP: ", enemy.get_hp())
+                dmg = player.generate_damage()
+                enemy = player.choose_target(enemies)
+                enemies[enemy].take_damage(magic_dmg)
+                print("You attacked", enemies[enemy].name,  "for", magic_dmg, "points of damage. Enemy HP: ", enemies[enemy].get_hp())
             print("You chose " + spell.name + " spell costing ", spell.cost, "mp")
         if index == 2:
             player.choose_item()
@@ -108,13 +116,14 @@ while running:
                     player.mp = player.maxmp
                 print(item.name," fully restores HP/MP")
             elif item.type == "attack":
-                enemy.take_damage(item.prop)
-                print("You attacked enemy with ", item.name, " for ", item.prop, " HP")
+                enemy = player.choose_target(enemies)
+                enemies[enemy].take_damage(item.prop)
+                print("You attacked ", enemies[enemy].name, " with ", item.name, " for ", item.prop, " HP")
 
     
     enemy_choice = 1
-    enemy_dmg = enemy.generate_damage()
     target = random.randrange(0,3)
+    enemy_dmg = enemies[target].generate_damage()
     players[target].take_damage(enemy_dmg)
 
 

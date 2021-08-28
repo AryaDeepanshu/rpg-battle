@@ -75,7 +75,7 @@ class Person:
 
 
     def choose_magic(self):
-        print("\n    Magics: ")
+        print("    Magics: ")
         i = 1
         for spell in self.magic:
             print("        " + str(i)+ ".", spell.name, "(cost:", str(spell.cost) + ")")
@@ -83,13 +83,22 @@ class Person:
 
 
     def choose_item(self):
-        print("\n    Items: ")
+        print("    Items: ")
         i = 1
         for item in self.items:
             print("        " + str(i)+ ".", item["item"].name, ":", item["item"].description, " (x" + str(item["quantity"])+")")
             i += 1
 
-    
+    def choose_target(self,enemies):
+        print("    Enimes: ")
+        i=1
+        for enemy in enemies:
+            print("        " + str(i)+ ".", enemy.name)
+            i += 1
+        choice = int(input("Chhose Enemy: ")) -1
+        return choice
+
+
     def get_enemy_stat(self):
         hp_bar = "█"*int((self.hp/self.maxhp)*100 / 2) + " "*(50-len(str("█"*int((self.hp/self.maxhp)*100 / 2))))
         hp_string = " "*(11-len(str(self.hp) + "/" + str(self.maxhp))) + str(self.hp) + "/" + str(self.maxhp)
