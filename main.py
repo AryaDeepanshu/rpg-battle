@@ -26,19 +26,20 @@ grenade = Items("Grenade", "attack", "Deals 500 damage", 500)
 
 
 player_magic = [fire, thunder, blizzard, meteor, quake, cure, cura]
+enemy_magic = [fire, thunder, blizzard, meteor, quake, cure, cura]
 player_items = [{"item":potion, "quantity": 5}, {"item":hipotion, "quantity": 5},
                 {"item":superpotion, "quantity": 5}, {"item":elixer, "quantity": 5},
                 {"item":highelixer, "quantity": 5}, {"item":grenade, "quantity": 5}]
 
 #players
-player1 = Person("Clay:", 3260, 132, 60, 34, player_magic, player_items)
-player2 = Person("Hannah:", 4160, 188, 60, 34, player_magic, player_items)
-player3 = Person("Tony:", 3089, 174, 60, 34, player_magic, player_items)
+player1 = Person("Clay:", 3260, 132, 60, 34, player_magic, player_items, "p")
+player2 = Person("Hannah:", 4160, 188, 60, 34, player_magic, player_items, "p")
+player3 = Person("Tony:", 3089, 174, 60, 34, player_magic, player_items, "p")
 
 #enemies 
-enemy1 = Person("Bryce:", 1200, 221, 45, 25, [],[])
-enemy2 = Person("Monty:", 1200, 221, 45, 25, [],[])
-enemy3 = Person("Jeff:", 1200, 221, 45, 25, [],[])
+enemy1 = Person("Bryce:", 1200, 221, 70, 25, enemy_magic,[], "e")
+enemy2 = Person("Monty:", 1200, 221, 65, 25, enemy_magic,[], "e")
+enemy3 = Person("Jeff:", 1200, 221, 45, 25, enemy_magic,[], "e")
 
 players = [player1, player2, player3]
 enemies = [enemy1, enemy2, enemy3]
@@ -68,6 +69,12 @@ while running:
             enemy = player.choose_target(enemies)
             enemies[enemy].take_damage(dmg)
             print("You attacked ", enemies[enemy].name, " for", dmg, "points of damage. Enemy HP: ", enemies[enemy].get_hp())
+            update = enemies[enemy].update_dmg(enemies)
+            if update != False:
+                enemies = update
+            else:
+                running = False
+                break
         if index == 1:
             player.choose_magic()
             choice = int(input("    Select Spell: ")) - 1
@@ -90,6 +97,12 @@ while running:
                 enemy = player.choose_target(enemies)
                 enemies[enemy].take_damage(magic_dmg)
                 print("You attacked", enemies[enemy].name,  "for", magic_dmg, "points of damage. Enemy HP: ", enemies[enemy].get_hp())
+                update = enemies[enemy].update_dmg(enemies)
+                if update != False:
+                    enemies = update
+                else:
+                    running = False
+                    break
             print("You chose " + spell.name + " spell costing ", spell.cost, "mp")
         if index == 2:
             player.choose_item()
@@ -119,17 +132,54 @@ while running:
                 enemy = player.choose_target(enemies)
                 enemies[enemy].take_damage(item.prop)
                 print("You attacked ", enemies[enemy].name, " with ", item.name, " for ", item.prop, " HP")
-
+                update = enemies[enemy].update_dmg(enemies)
+                if update != False:
+                    enemies = update
+                else:
+                    running = False
+                    break
     
-    enemy_choice = 1
-    target = random.randrange(0,3)
-    enemy_dmg = enemies[target].generate_damage()
-    players[target].take_damage(enemy_dmg)
+    for enemy in enemies:
+        enemy_choice = random.randrange(0,2)
+        if enemy_choice == 0:
+            target = random.randrange(0,len(players))
+            enemy = enemies[random.randrange(0,len(enemies))]
+            enemy_dmg = enemy.generate_damage()
+            players[target].take_damage(enemy_dmg)
+
+            print(enemy.name," attcked ",players[target].name, " for", enemy_dmg, " HP")
+
+            update = players[target].update_dmg(players)
+            if update != False:
+                players = update
+            else:
+                running = False
+                break
+        
+        elif enemy_choice == 1:
+            spell, magic_dmg = enemy.choose_enemy_spell()
+            enemy.reduce_mp(spell.cost)
+            if spell.type == "heal":
+                enemy.heal(magic_dmg)
+                print(spell.name, " heals ", enemy.name, " for ", magic_dmg, " HP")
+            elif spell.type == "Black":
+                target = random.randrange(0,len(players))
+                players[target].take_damage(magic_dmg)
+                print(enemy.name, " attacks with ", spell.name, " with ", magic_dmg, " damage points")
+                update = players[target].update_dmg(players)
+                if update != False:
+                    players = update
+                else:
+                    running = False
+                    break
 
 
-    if enemy.get_hp() == 0:
-        print(bcolors.OKGREEN + "You Win!" + bcolors.ENDC)
-        running = False
-    elif player.get_hp() == 0:
-        print(bcolors.OKGREEN + "You lost!" + bcolors.ENDC)
-        running = False
+    # enemies_defeated = []
+    # player_defeated = []
+
+    # if len(players) < 1:
+    #     print("Enemy Won")
+    #     running = False
+    # elif len(enemies) < 1:
+    #     print("You Won")
+    #     running = False

@@ -12,7 +12,7 @@ class bcolors:
 
 
 class Person:
-    def __init__(self, name, hp, mp, atk, df, magic, items):
+    def __init__(self, name, hp, mp, atk, df, magic, items,type):
         self.maxhp = hp 
         self.name = name   
         self.hp = hp                  
@@ -23,11 +23,27 @@ class Person:
         self.df = df
         self.magic = magic
         self.items = items
+        self.type = type
         self.action = ["Attack", "Magic", "Items"]
 
 
     def generate_damage(self):
         return random.randrange(self.atkl,self.atkh)
+
+
+    def update_dmg(self,list):
+        type = list[0].type
+        for i in list:
+            if i.get_hp() == 0:
+                list.remove(i)
+                print(i.name, " defeated")
+        if(len(list) < 1):
+            if(type == "e"):
+                print("You Won")
+            else:
+                print("Enemy Won")
+            return False
+        return list
 
 
     def take_damage(self,dmg):
@@ -63,6 +79,16 @@ class Person:
             self.hp = self.maxhp
         else:
             self.hp += dmg
+
+
+    def choose_enemy_spell(self):
+        magic_choice = random.randrange(0,len(self.magic))
+        spell = self.magic[magic_choice]
+        magic_dmg = self.generate_damage()
+        pct = (self.hp/self.maxhp)*100
+        if self.mp < spell.cost or spell.type == "White" and pct > 50:
+            self.choose_enemy_spell()
+        return spell, magic_dmg
 
 
     def choose_action(self):
