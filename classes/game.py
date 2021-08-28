@@ -92,7 +92,7 @@ class Person:
 
 
     def choose_action(self):
-        print("    "+self.name)
+        print("\n    "+self.name+"'s turn")
         print("    Actions: ")
         i = 1
         for item in self.action:
@@ -121,7 +121,7 @@ class Person:
         for enemy in enemies:
             print("        " + str(i)+ ".", enemy.name)
             i += 1
-        choice = int(input("Chhose Enemy: ")) -1
+        choice = int(input("Choose Enemy: ")) -1
         return choice
 
 
@@ -129,8 +129,8 @@ class Person:
         hp_bar = "█"*int((self.hp/self.maxhp)*100 / 2) + " "*(50-len(str("█"*int((self.hp/self.maxhp)*100 / 2))))
         hp_string = " "*(11-len(str(self.hp) + "/" + str(self.maxhp))) + str(self.hp) + "/" + str(self.maxhp)
 
-        print("                              "+ 50*"_")
-        print(self.name + (16-len(self.name))*" ", hp_string, "|" + hp_bar + "|")
+        print("                               "+ 50*"_")
+        print(self.name+":"+ (16-len(self.name))*" ", hp_string, "|" + hp_bar + "|")
 
 
     def get_stat(self):
@@ -141,5 +141,5 @@ class Person:
         hp_string = " "*(11-len(str(self.hp) + "/" + str(self.maxhp))) + str(self.hp) + "/" + str(self.maxhp)
         mp_string = " "*(9-len(str(self.mp) + "/" + str(self.maxmp))) + str(self.mp) + "/" + str(self.maxmp)
 
-        print("                              _________________________                  __________")
-        print(self.name + (16-len(self.name))*" ", hp_string, "|" + hp_bar + "|     ", mp_string, "|" + mp_bar + "|")
+        print("                               _________________________                  __________")
+        print(self.name+":"+ (16-len(self.name))*" ", hp_string, "|" + hp_bar + "|     ", mp_string, "|" + mp_bar + "|")

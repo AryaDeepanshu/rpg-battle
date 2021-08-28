@@ -31,14 +31,14 @@ player_items = [{"item":potion, "quantity": 5}, {"item":hipotion, "quantity": 5}
                 {"item":highelixer, "quantity": 5}, {"item":grenade, "quantity": 5}]
 
 #players
-player1 = Person("Clay:", 3260, 132, 60, 34, player_magic, player_items, "p")
-player2 = Person("Hannah:", 4160, 188, 60, 34, player_magic, player_items, "p")
-player3 = Person("Tony:", 3089, 174, 60, 34, player_magic, player_items, "p")
+player1 = Person("Clay", 3260, 132, 60, 34, player_magic, player_items, "p")
+player2 = Person("Hannah", 4160, 188, 60, 34, player_magic, player_items, "p")
+player3 = Person("Tony", 3089, 174, 60, 34, player_magic, player_items, "p")
 
 #enemies 
-enemy1 = Person("Bryce:", 1200, 221, 70, 25, enemy_magic,[], "e")
-enemy2 = Person("Monty:", 1200, 221, 65, 25, enemy_magic,[], "e")
-enemy3 = Person("Jeff:", 1200, 221, 45, 25, enemy_magic,[], "e")
+enemy1 = Person("Bryce", 1200, 221, 70, 25, enemy_magic,[], "e")
+enemy2 = Person("Monty", 1200, 221, 65, 25, enemy_magic,[], "e")
+enemy3 = Person("Jeff", 1200, 221, 45, 25, enemy_magic,[], "e")
 
 #player & enemy list
 players = [player1, player2, player3]
@@ -46,11 +46,11 @@ enemies = [enemy1, enemy2, enemy3]
 
 running = True
 i = 0
-print("An Enemy Attacks!")
+print("                                     RPG Battle")
 
 while running:
-    print("================================")
-    print("\n\n")
+    print("==========================================================================================")
+    print("\n")
     print("NAME                          HP                                         MP")
     
     for player in players:
@@ -64,7 +64,7 @@ while running:
         player.choose_action()
         choice = input("    Choose Action: ")
         index = int(choice) - 1
-        print("\nYou chose ",player.action[index])
+        print("    You chose: ",player.action[index])
 
         if index == 0:
             dmg = player.generate_damage()
