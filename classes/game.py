@@ -89,6 +89,14 @@ class Person:
             print("        " + str(i)+ ".", item["item"].name, ":", item["item"].description, " (x" + str(item["quantity"])+")")
             i += 1
 
+    
+    def get_enemy_stat(self):
+        hp_bar = "█"*int((self.hp/self.maxhp)*100 / 2) + " "*(50-len(str("█"*int((self.hp/self.maxhp)*100 / 2))))
+        hp_string = " "*(11-len(str(self.hp) + "/" + str(self.maxhp))) + str(self.hp) + "/" + str(self.maxhp)
+
+        print("                              "+ 50*"_")
+        print(self.name + (16-len(self.name))*" ", hp_string, "|" + hp_bar + "|")
+
 
     def get_stat(self):
         hp_bar = "█"*int((self.hp/self.maxhp)*100 / 4) + " "*(25-len(str("█"*int((self.hp/self.maxhp)*100 / 4))))
